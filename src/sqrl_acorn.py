@@ -1,6 +1,4 @@
-import os
 import argparse
-from migen import *
 from litex.soc.interconnect.csr import *
 from litex.soc.integration.soc_core import *
 from litex.soc.integration.builder import *
