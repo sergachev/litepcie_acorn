@@ -1,0 +1,6 @@
+[submodule "litepcie"]
+	path = litepcie
+	url = https://github.com/enjoy-digital/litepcie
+[submodule "litex"]
+	path = litex
+	url = https://github.com/enjoy-digital/litex
