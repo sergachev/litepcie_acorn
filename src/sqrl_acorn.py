@@ -1,10 +1,15 @@
+import os
 import argparse
-from litex.soc.interconnect.csr import *
-from litex.soc.integration.soc_core import *
-from litex.soc.integration.builder import *
-from litex.soc.cores.clock import *
+from migen import Signal, ClockDomain, Module
+from litex.soc.integration.soc_core import SoCCore, soc_core_args, soc_core_argdict
+from litex.soc.integration.builder import Builder, builder_args, builder_argdict
+from litex.soc.cores.clock import S7PLL, S7IDELAYCTRL
+from litex.soc.cores.gpio import GPIOOut
 from litex.soc.cores.led import LedChaser
 from litex.soc.cores.icap import ICAP
+from litex.soc.cores.dna import DNA
+from litex.soc.cores.xadc import XADC
+from litex.soc.cores.spi_flash import S7SPIFlash
 from litepcie.phy.s7pciephy import S7PCIEPHY
 from litepcie.software import generate_litepcie_software
 import sqrl_acorn_platform as acorn
@@ -71,6 +76,12 @@ class BaseSoC(SoCCore):
         self.icap.add_reload()
         self.icap.add_timing_constraints(platform, sys_clk_freq, self.crg.cd_sys.clk)
 
+        self.submodules.dna = DNA()
+        self.submodules.xadc = XADC()
+
+        self.submodules.flash_cs_n = GPIOOut(platform.request("flash_cs_n"))
+        self.submodules.flash = S7SPIFlash(platform.request("flash"), sys_clk_freq, 25e6)
+
         if with_led_chaser:
             self.submodules.leds = LedChaser(
                 pads=platform.request("user_led", 0),
@@ -89,7 +100,6 @@ def main():
     builder_args(parser)
     soc_core_args(parser)
     args = parser.parse_args()
-
     soc_argdict = soc_core_argdict(args)
 
     soc_argdict['cpu_type'] = None
