@@ -91,7 +91,9 @@ def main():
     args = parser.parse_args()
 
     soc_argdict = soc_core_argdict(args)
+
     soc_argdict['cpu_type'] = None
+
     soc = BaseSoC(
         variant=args.variant,
         sys_clk_freq=int(float(args.sys_clk_freq)),
@@ -110,7 +112,9 @@ def main():
 
     if args.flash:
         prog = soc.platform.create_programmer()
-        prog.flash(0, os.path.join(builder.gateware_dir, soc.build_name + ".bin"))
+        prog.flash(address=0,
+                   data_file=os.path.join(builder.gateware_dir, soc.build_name + ".mcs"),
+                   device=1)
 
 
 if __name__ == "__main__":
