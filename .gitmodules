@@ -6,4 +6,4 @@
 	url = https://github.com/enjoy-digital/litex
 [submodule "cmake-kernel-module"]
 	path = cmake-kernel-module
-	url = git@gitlab.com:phip1611/cmake-kernel-module.git
+	url = https://gitlab.com/sergachev/cmake-kernel-module.git
