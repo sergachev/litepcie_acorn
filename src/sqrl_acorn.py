@@ -102,7 +102,8 @@ def main():
     args = parser.parse_args()
     soc_argdict = soc_core_argdict(args)
 
-    soc_argdict['cpu_type'] = None
+    # soc_argdict['cpu_type'] = None
+    soc_argdict['uart_name'] = 'crossover'
 
     soc = BaseSoC(
         variant=args.variant,

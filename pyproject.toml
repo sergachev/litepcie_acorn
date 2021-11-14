@@ -8,7 +8,9 @@ authors = ["Ilia Sergachev <ilia.sergachev@pm.me>"]
 python = "^3.9"
 litex = {path = "litex", develop = true}
 litepcie = {path = "litepcie", develop = true}
-pythondata-cpu-vexriscv = "^1.0.1"
+pythondata-cpu-vexriscv = "*"
+pythondata-software-picolibc = "*"
+meson = "*"
 
 [tool.poetry.dev-dependencies]
 
